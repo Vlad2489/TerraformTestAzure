@@ -32,3 +32,4 @@ website/vendor
 
 # Coverage
 coverage.txt
+/.vs/slnx.sqlite
