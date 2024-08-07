@@ -1,0 +1,41 @@
+trigger:
+  - main
+pool:
+  name: SelfHosted
+steps:
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+  displayName: 'Install Terraform latest'
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+  displayName: 'Terraform : INIT'
+  inputs:
+    backendAzureRmUseEnvironmentVariablesForAuthentication: false
+    backendAzureRmUseEntraIdForAuthentication: false
+    backendServiceArm: 'Azure subscription 1 (6527eb9c-e469-45be-a48a-27e15d0cb581)'
+    backendAzureRmResourceGroupName: 'jonnychipz-infra'
+    backendAzureRmStorageAccountName: jonnychipztstate
+    backendAzureRmContainerName: tstate
+    backendAzureRmKey: 'jO5xxxFWlRZADJpPMiIC1jsIPLcTJeLc/R8IbquTA73uK9S88ozRk5IyiC1JVGaSdtl62g2FU7kd+AStwzqkLw=='
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+  displayName: 'Terraform : PLAN'
+  inputs:
+    command: plan
+    environmentServiceNameAzureRM: 'Azure subscription 1 (6527eb9c-e469-45be-a48a-27e15d0cb581)'
+    backendAzureRmUseEnvironmentVariablesForAuthentication: false
+    backendAzureRmUseEntraIdForAuthentication: false
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+  displayName: 'Terraform : VALIDATE'
+  inputs:
+    command: validate
+    backendAzureRmUseEnvironmentVariablesForAuthentication: false
+    backendAzureRmUseEntraIdForAuthentication: false
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+  displayName: 'Terraform : APPLY'
+  inputs:
+    command: apply
+    environmentServiceNameAzureRM: 'Azure subscription 1 (6527eb9c-e469-45be-a48a-27e15d0cb581)'
+    backendAzureRmUseEnvironmentVariablesForAuthentication: false
+    backendAzureRmUseEntraIdForAuthentication: false
