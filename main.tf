@@ -10,7 +10,7 @@ terraform {
      resource_group_name   = "jonnychipz-infra"
     storage_account_name  = "jonnychipztstate"
     container_name        = "tstate"
-    key                   =""
+    key                   = ""
     }
 }
 provider "azurerm" {
